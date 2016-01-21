@@ -2,6 +2,14 @@ FROM ubuntu:14.04.3
 
 MAINTAINER Joseph Tran <Joseph.Tran@versailles.inra.fr>
 
+# set locales
+RUN localedef -i fr_FR -c -f UTF-8 -A /usr/share/locale/locale.alias fr_FR.UTF-8
+ENV LANG fr_FR.utf8
+
+# set timezone
+RUN echo "Europe/Paris" > /etc/timezone    
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 # Suppress Upstart errors/warning
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
